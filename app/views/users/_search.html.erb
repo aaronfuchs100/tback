@@ -1,0 +1,12 @@
+<style type="text/css">
+
+  #searchform{
+    margin-left: 20px;
+  }
+
+</style>
+
+
+<%= form_tag '/users/search', :id => 'searchform', :remote => true do %>
+  <%= text_field_tag 'query',  nil, :placeholder => 'Enter search term...' %>
+<% end %>

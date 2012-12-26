@@ -1,0 +1,46 @@
+<div id="newHeader">
+  <h1 class="newNames"><%= @user.name %></h1>
+</div>
+
+<div class="showUser">
+  <div id="showUser2">
+<p class="newNames"><strong>Phone:</strong> <%= @user.phone %><br></p>
+<p class="newNames"><strong>Email:</strong> <%= @user.email %><br><br></p>
+
+<strong>Add  number of stompie cups:</strong>
+
+<%= form_for @item do |f|  %>
+
+<div class = 'field'>
+   <%=  f.label :no_cups %>
+   <%=  f.text_field :no_cups  %>
+   <%=f.hidden_field :user_id, :value => @user.id %>
+</div>
+
+  <%= f.submit  %>
+<% end  %>
+
+<br>
+
+<strong>All cups brought</strong>
+<% @user.items.each do |item| %>
+
+  <%= item.no_cups %> Cups, Brought at:
+  <%= item.created_at.to_formatted_s(:short) %>
+  <br>
+  <% end %>
+
+  <br>
+
+  <%= @user.items.sum(:no_cups) %>
+
+<br><br>
+
+<strong>Total cups overall</strong><br>
+
+<br>
+
+<%= link_to 'all users', users_path %>
+  </div>
+<%=image_tag("http://bit.ly/W1EvJC", :class=> "cigButt") %>
+</div>

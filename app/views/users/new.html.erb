@@ -1,0 +1,47 @@
+<style type="text/css">
+
+
+.newUser {
+  padding: 10px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+</style>
+
+
+
+<div id="newHeader">
+
+	 <h1 class="newNames">Create New User</h1>
+
+</div>
+
+<div class="newUser">
+
+			<%= form_for @user do |f|  %>
+			<div class = 'field'>
+			   <%=  f.label :name  %>
+			   <%=  f.text_field :name  %>
+			</div>
+
+			<div class = 'field'>
+			    <%=  f.label :phone  %>
+			    <%=  f.text_field :phone  %>
+			</div>
+
+			<div class = 'field'>
+			    <%=  f.label :email  %>
+			  <%=  f.text_field :email  %>
+			</div>
+			  <%= f.submit "create user", :class => 'btn btn-primary' %>
+			<% end  %>
+</div>
+
+
+
+
+
+
+
+<!--<%= link_to 'all users', root_path, :class=>"newButton" %>-->

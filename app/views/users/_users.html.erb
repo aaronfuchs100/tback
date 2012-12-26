@@ -1,0 +1,52 @@
+<style type="text/css">
+
+  .person{
+    display: inline-block;
+    border: 1px dotted black;
+    float: left;
+    margin: 10px;
+    padding: 5px;
+    box-shadow: 1px;
+    background: white;
+    width: 300px;
+    border-radius: 5px;
+  }
+
+  .clear{
+    clear: both;
+  }
+
+  #users{
+    font-size: 14px;
+  }
+
+  #users :hover{
+    background-color: #edc374;
+    opacity: 0.8;
+  }
+
+  .form-search{
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
+
+</style>
+
+
+
+
+
+    <% @users.each do |user| %>
+
+          <div class = "person">
+              <i class="icon-user"> </i> | <%= link_to user.name, user %>  <br>
+              <i class="icon-home"> </i> | <%= user.phone %> <br>
+              <i class="icon-envelope"> </i> | <%= user.email %> <br>
+
+            </div>
+
+          <% end %>
+
+
+
+

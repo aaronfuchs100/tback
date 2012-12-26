@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trashback</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <link href='http://fonts.googleapis.com/css?family=Gilda+Display' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/960_12_col.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Economica:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+
+<header>
+  <div id="headerInside">
+      <%=link_to image_tag("theader.png", :class=> "trashHead") %>
+
+      <ul id="list-nav">
+        <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to 'People', users_path %></li>
+        <li><%= link_to 'New', new_user_path %></li>
+        <li><a href="http://trashback.org/blog/">Blog</a></li>
+        <li><%= link_to 'Contact', contact_path %></li>
+      </ul>
+
+        <div class="clear"></div>
+  </div>
+    </header>
+
+    <div id="container" class="container_12">
+
+       <%= yield %>
+
+    </div><!-- #container -->
+
+
+
+      <footer>
+
+        <!--<%=image_tag("http://bit.ly/10g1OXr", :class=> "Rez") %>-->
+
+        &copy; 2012 - Trashback | <a id="newsletter" href="http://trashback.org/engage/" target="_blank">Sign up for our newsletter</a></footer>
+  </body>
+</html>
+
+
+
+
+
