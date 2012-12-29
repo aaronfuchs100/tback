@@ -7,13 +7,15 @@
 <p class="newNames"><strong>Phone:</strong> <%= @user.phone %><br></p>
 <p class="newNames"><strong>Email:</strong> <%= @user.email %><br><br></p>
 
-<strong>Add  number of stompie cups:</strong>
+<strong>What was brought in?</strong>
 
 <%= form_for @item do |f|  %>
 
 <div class = 'field'>
-   <%=  f.label :no_cups %>
+   <%=  f.label :no_cups_stompies %>
    <%=  f.text_field :no_cups  %>
+   <%=  f.label :no_cups_plastic %>
+   <%=  f.text_field :no_cups_plastic  %>
    <%=f.hidden_field :user_id, :value => @user.id %>
 </div>
 
@@ -22,21 +24,29 @@
 
 <br>
 
-<strong>All cups brought</strong>
+<strong>All cups brought</strong> <br>
+<br>
 <% @user.items.each do |item| %>
 
-  <%= item.no_cups %> Cups, Brought at:
+  <%= item.no_cups %> Stompie Cups and <%= item.no_cups_plastic %> Plastic Cups, Brought at:
   <%= item.created_at.to_formatted_s(:short) %>
   <br>
   <% end %>
 
   <br>
 
+  Total Stompie Cups
   <%= @user.items.sum(:no_cups) %>
+
+  <br>
+  Total Plastic Cups
+  <%= @user.items.sum(:no_cups_plastic) %>
 
 <br><br>
 
-<strong>Total cups overall</strong><br>
+<strong>Total cups overall</strong>
+
+<%= @items.map(&:no_cups).inject(:+, 0) %>
 
 <br>
 

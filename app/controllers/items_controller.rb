@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
     @users = User.all
     @items = Item.all
 
+
   end
 
   def new
@@ -13,6 +14,8 @@ class ItemsController < ApplicationController
   end
 
   def create
+    binding.pry
+
 
     @item = Item.create(params[:item])
     redirect_to root_path
