@@ -19,7 +19,7 @@
    <%=f.hidden_field :user_id, :value => @user.id %>
 </div>
 
-  <%= f.submit  %>
+  <%= f.submit "add items", :class => 'btn btn-primary' %>
 <% end  %>
 
 <br>
@@ -35,20 +35,24 @@
 
   <br>
 
-  Total Stompie Cups
+  <%= @user.name %>'s Total Stompie Cups
   <%= @user.items.sum(:no_cups) %>
 
   <br>
-  Total Plastic Cups
+  <%= @user.name %>'s Total Plastic Cups
   <%= @user.items.sum(:no_cups_plastic) %>
 
 <br><br>
 
-<strong>Total cups overall</strong>
+<strong>Total cups overall</strong><br>
 
-<%= @items.map(&:no_cups).inject(:+, 0) %>
+Total Stompie Cups: <%= @items.map(&:no_cups).inject(0,:+) %> <br>
+Total Plastic Cups: <%= @items.map(&:no_cups_plastic).inject(0,:+) %>
 
 <br>
+<br>
+<br>
+
 
 <%= link_to 'all users', users_path %>
   </div>
