@@ -12,12 +12,23 @@
 <%= form_for @item do |f|  %>
 
 <div class = 'field'>
-   <%=  f.label :no_cups_stompies %>
-   <%=  f.text_field :no_cups  %>
-   <%=  f.label :no_cups_plastic %>
-   <%=  f.text_field :no_cups_plastic  %>
+   <%=  f.label :name %>
+   <%=  f.text_field :name %>
+   <%=  f.label :phone %>
+   <%=  f.text_field :phone %>
+   <%=  f.label :name %>
+   <%=  f.text_field :name %>
+   <%=  f.label :name %>
+   <%=  f.text_field :name %>
    <%=f.hidden_field :user_id, :value => @user.id %>
 </div>
+
+
+    t.string   "name"
+    t.string   "phone"
+    t.string   "email"
+    t.integer  "event_id"
+
 
   <%= f.submit "add items", :class => 'btn btn-primary' %>
 <% end  %>

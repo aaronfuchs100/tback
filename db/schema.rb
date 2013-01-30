@@ -68,10 +68,10 @@ ActiveRecord::Schema.define(:version => 20130129113328) do
   create_table "rewards", :force => true do |t|
     t.string   "item"
     t.decimal  "value"
-    t.integer  "quantity"
+    t.integer  "quantity",   :default => 0
     t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "users", :force => true do |t|

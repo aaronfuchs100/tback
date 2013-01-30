@@ -14,11 +14,16 @@ Trashback::Application.routes.draw do
     end
 
   resources :items
-  resources :events
+  resources :events do
+    get :autocomplete_user_phone, :on => :collection
+  end
+
 
   post '/rewards' => 'events#rewards'
   post '/recyclables' => 'events#recyclables'
   post '/events/newuser' => 'events#newuser'
+  post '/recycle' => 'events#recycle'
+  post '/redeem' => 'events#redeem'
 
 
 

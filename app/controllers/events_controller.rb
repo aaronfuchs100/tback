@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+
+  autocomplete :user, :phone, :full => true, :extra_data => [:phone]
   def index
     binding.pry
     @events = Event.all
@@ -33,7 +35,26 @@ class EventsController < ApplicationController
   def newuser
     @user = User.create(params[:user])
     event_id = params[:event_id]
-    binding.pry
     redirect_to :action => "show", :id => event_id
+  end
+  def recycle
+    event_id = params[:event_id]
+    @u = User.find_by_phone(params[:user])
+    rvalue = Recyclable.find(params[:recyclable][:id].to_i).value
+    q = params[:quantity][:number].to_i
+    val = rvalue * q
+    @u.balance += val
+    @u.save
+    redirect_to :action => "show", :id => event_id, :u => @u.id
+  end
+  def redeem
+    event_id = params[:event_id]
+    @u = User.find(params[:user_id])
+    @r = Reward.find(params[:r_id])
+    @u.balance -= @r.value
+    @u.save
+    @r.quantity -= 1
+    @r.save
+    redirect_to :action => "show", :id => event_id, :u => @u.id
   end
 end

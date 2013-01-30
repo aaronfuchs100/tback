@@ -1,4 +1,7 @@
 <style type="text/css">
+#cont{
+  margin: 20px;
+}
 #show{
   border: 1px solid #00000;
   margin: 0 100px;
@@ -30,68 +33,101 @@ input{
 #register_user{
 }
 </style>
+<div id='cont'>
 
+  <div id='show'>
+    <h3><%= @event.name %></h3>
+    <div>date: <%= @event.date %></div>
+    <div>location: <%= @event.location %></div>
+    <div>contact person: <%= @event.contact %></div>
+    <div>phone: <%= @event.phone %></div>
+    <div>email: <%= @event.email %></div>
+  </div>
 
-<div id='show'>
-  <h3><%= @event.name %></h3>
-  <div>date: <%= @event.date %></div>
-  <div>location: <%= @event.location %></div>
-  <div>contact person: <%= @event.contact %></div>
-  <div>phone: <%= @event.phone %></div>
-  <div>email: <%= @event.email %></div>
-</div>
-
-<div id='form'>
-  <h3>Add</h3>
-  <%= form_tag do %>
-    item name*: <%= text_field_tag 'name' %><br>
-    value*: <%= text_field_tag 'value' %><br>
-    quantity: <%= text_field_tag 'quantity', '', :placeholder => 'only for rewards' %><br>
-    <%= hidden_field_tag 'event_id', @event.id %>
-    <button type="button" id='add_reward'>Reward</button>
-    <button type="button" id='add_recycle'>Recyclable</button>
-  <% end %>
-</div>
-<div class="newUser">
-  <h3>Register User</h3>
-    <%= form_for @user, :url => '/events/newuser' do |f|  %>
-      name: <%= f.text_field :name %><br>
-      phone: <%= f.text_field :phone %><br>
-      email: <%= f.text_field :email %><br>
+  <div id='form'>
+    <h3>Add</h3>
+    <%= form_tag do %>
+      item name*: <%= text_field_tag 'name' %><br>
+      value*: <%= text_field_tag 'value' %><br>
+      quantity: <%= text_field_tag 'quantity', '', :placeholder => 'only for rewards' %><br>
       <%= hidden_field_tag 'event_id', @event.id %>
-      <%= f.submit "create user", :class => 'btn btn-primary' %>
-    <% end  %>
-</div>
-<div class='clearfix'></div>
-<div id='rewards'>
-  <h3>Rewards</h3>
-  <% @event.rewards.each do |r| %>
-    <div class='reward'>
-      Item: <%= r.item %><br>
-      Value: <%= number_to_currency(r.value, :unit => 'R') %><br>
-      Quantity: <%= r.quantity %>
-    </div>
-  <% end %>
-</div>
-<div class='clearfix'></div>
-<div id='recycles'>
-  <h3>Recyclables</h3>
-  <% @event.recyclables.each do |r| %>
-    <div class='recyclable'>
-      Item: <%= r.item %><br>
-      Value: <%= number_to_currency(r.value, :unit => 'R') %>
-    </div>
-  <% end %>
-</div>
-<div class='clearfix'></div>
-<div>
-  <%= form_tag do %>
-    User: <%= text_field_tag 'user' %><br>
-    Item: <%= collection_select(:recyclable, :id, @event.recyclables, :id, :item )%><br>
-    Quantity: <%= select :quantity, :number, (0..10) %><br>
-    Balance:
-  <% end %>
-</div>
+      <button type="button" id='add_reward'>Reward</button>
+      <button type="button" id='add_recycle'>Recyclable</button>
+    <% end %>
+  </div>
+  <div class="newUser">
+    <h3>Register User</h3>
+      <%= form_for @user, :url => '/events/newuser' do |f|  %>
+        name: <%= f.text_field :name %><br>
+        phone: <%= f.text_field :phone %><br>
+        email: <%= f.text_field :email %><br>
+        <%= hidden_field_tag 'event_id', @event.id %>
+        <%= f.submit "create user", :class => 'btn btn-primary' %>
+      <% end  %>
+  </div>
+  <div class='clearfix'></div>
+  <div id='rewards'>
+    <h3>Rewards</h3>
+    <% @event.rewards.each do |r| %>
+      <div class='reward'>
+        Item: <%= r.item %><br>
+        Value: <%= number_to_currency(r.value, :unit => '') %><br>
+        Quantity: <%= r.quantity %>
+      </div>
+    <% end %>
+  </div>
+  <div class='clearfix'></div>
+  <div id='recycles'>
+    <h3>Recyclables</h3>
+    <% @event.recyclables.each do |r| %>
+      <div class='recyclable'>
+        Item: <%= r.item %><br>
+        Value: <%= number_to_currency(r.value, :unit => '') %>
+      </div>
+    <% end %>
+  </div>
+  <div class='clearfix'></div>
+  <div>
+    <%= form_tag '/recycle' do %>
+      Phone number: <%= autocomplete_field_tag 'user', '', autocomplete_user_phone_events_path, :size => 75 %><br>
+      Item: <%= collection_select(:recyclable, :id, @event.recyclables, :id, :item )%><br>
+      Quantity: <%= select :quantity, :number, (0..10) %><br>
+      <%= hidden_field_tag 'event_id', @event.id %>
+      <%= submit_tag 'recycle!' %>
+    <% end %>
+  </div>
+  <div id='user_show'>
+    <% if params[:u] %>
+      <% @user = User.find(params[:u]) %>
+      Name: <%= @user.name %><br>
+      Email: <%= @user.email %><br>
+      Phone: <%= @user.phone %><br>
+      Balance: <%= number_to_currency( @user.balance, :unit => '' ) %><br>
+      <h3>Redeem</h3>
+      <% @event.rewards.each do |r| %>
+        <% if @user.balance >= r.value && r.quantity > 0 %>
+        <div class='reward'>
+          <%= form_tag '/redeem' do %>
+            Item: <%= r.item %><br>
+            Value: <%= number_to_currency(r.value, :unit => '') %><br>
+            Quantity: <%= r.quantity %>
+            <%= hidden_field_tag 'event_id', @event.id %>
+            <%= hidden_field_tag 'r_id', r.id %>
+            <%= hidden_field_tag 'user_id', @user.id %>
+            <%= submit_tag 'redeem' %>
+          <% end %>
+        </div>
+      <% end -%>
+    <% end %>
+    <% end %>
+  </div>
+</div> <!-- container -->
+
+
+
+
+
+
 
 
 
