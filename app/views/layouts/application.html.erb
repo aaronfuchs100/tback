@@ -22,8 +22,7 @@
 
 <header>
   <div id="headerInside">
-      <%=link_to image_tag("theader.png", :class=> "trashHead") %>
-
+    <%=link_to image_tag("theader.png", :class=> "trashHead") %>
       <ul id="list-nav">
         <li><%= link_to 'Home', root_path %></li>
         <li><%= link_to 'Events', events_path %></li>
@@ -32,25 +31,19 @@
         <li><a href="http://trashback.org/blog/">Blog</a></li>
         <li><%= link_to 'Contact', contact_path %></li>
       </ul>
-
-        <div class="clear"></div>
+      <div class="clear"></div>
   </div>
-    </header>
+</header>
+<div id="container" class="container_12">
+  <%= yield %>
+</div><!-- #container -->
 
-    <div id="container" class="container_12">
+<footer>
+  <!--<%=image_tag("http://bit.ly/10g1OXr", :class=> "Rez") %>-->
+  &copy; 2012 - Trashback | <a id="newsletter" href="http://trashback.org/engage/" target="_blank">Sign up for our newsletter</a>
+</footer>
 
-       <%= yield %>
-
-    </div><!-- #container -->
-
-
-
-      <footer>
-
-        <!--<%=image_tag("http://bit.ly/10g1OXr", :class=> "Rez") %>-->
-
-        &copy; 2012 - Trashback | <a id="newsletter" href="http://trashback.org/engage/" target="_blank">Sign up for our newsletter</a></footer>
-  </body>
+</body>
 </html>
 
 

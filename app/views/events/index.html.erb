@@ -1,8 +1,21 @@
+<style type="text/css">
+.event{
+  float: left;
+  border: 1px solid #000;
+  margin: 5px;
+  padding: 5px;
+}
+</style>
+
+<div style='margin: 30px;'><%= link_to 'new event', new_event_path %></div>
+
 <% @events.each do |event| %>
-  <div>date: <%= event.date %></div>
-  <div>location: <%= event.location %></div>
-  <div>event: <%= link_to event.name, event %></div>
-  <div>contact person: <%= event.contact %></div>
-  <div>phone: <%= event.phone %></div>
-  <div>email: <%= event.email %></div>
+  <div class='event'>
+    <div>event: <%= link_to event.name, event %></div>
+    <div>date: <%= event.date %></div>
+    <div>location: <%= event.location %></div>
+    <div>contact person: <%= event.contact %></div>
+    <div>phone: <%= event.phone %></div>
+    <div>email: <%= event.email %></div>
+  </div>
 <% end %>

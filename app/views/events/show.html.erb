@@ -101,7 +101,7 @@ input{
     <% @event.rewards.each do |r| %>
       <div class='reward'>
         Item: <%= r.item %><br>
-        Value: <%= number_to_currency(r.value, :unit => '') %><br>
+        Value: <%= number_to_currency(r.value, :unit => 'TB ') %><br>
         Quantity: <%= r.quantity %>
       </div>
     <% end %>
@@ -112,7 +112,7 @@ input{
     <% @event.recyclables.each do |r| %>
       <div class='recyclable'>
         Item: <%= r.item %><br>
-        Value: <%= number_to_currency(r.value, :unit => '') %>
+        Value: <%= number_to_currency(r.value, :unit => 'TB ') %>
       </div>
     <% end %>
     <div class='clearfix'></div>
@@ -137,7 +137,7 @@ input{
         Name: <%= @user.name %><br>
         Email: <%= @user.email %><br>
         Phone: <%= @user.phone %><br>
-        Balance: <%= number_to_currency( @user.balance, :unit => '' ) %><br>
+        Balance: <%= number_to_currency( @user.balance, :unit => 'TB ' ) %><br>
       </div>
       <div id='redeem'>
         <h3>Redeem</h3>
@@ -146,7 +146,7 @@ input{
             <div class='reward'>
               <%= form_tag '/redeem' do %>
                 Item: <%= r.item %><br>
-                Value: <%= number_to_currency(r.value, :unit => '') %><br>
+                Value: <%= number_to_currency(r.value, :unit => 'TB ') %><br>
                 Quantity: <%= r.quantity %>
                 <%= hidden_field_tag 'event_id', @event.id %>
                 <%= hidden_field_tag 'r_id', r.id %>
@@ -168,6 +168,7 @@ input{
 
 <script type="text/javascript">
   $(function(){
+    $('#add_add').hide();
     $('#add_reward').click(add_reward);
     $('#add_recycle').click(add_recycle);
     $('#add_item').click(function(){
