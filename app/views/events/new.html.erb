@@ -1,0 +1,18 @@
+<%= form_for @event do |f| %>
+  Date (DD/MM/YYYY)<br>
+  <%= f.text_field :date %>
+  <%= f.label :name_of_event %>
+  <%= f.text_field :name %>
+  <%= f.label :location %>
+  <%= f.text_field :location %>
+  <%= f.label :name_of_contact %>
+  <%= f.text_field :name %>
+  <%= f.label :contact_phone %>
+  <%= f.text_field :phone %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <br>
+  <%= f.submit "create event", :class => 'btn btn-primary' %>
+<% end %>
+
+

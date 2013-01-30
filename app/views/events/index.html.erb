@@ -1,0 +1,8 @@
+<% @events.each do |event| %>
+  <div>date: <%= event.date %></div>
+  <div>location: <%= event.location %></div>
+  <div>event: <%= link_to event.name, event %></div>
+  <div>contact person: <%= event.contact %></div>
+  <div>phone: <%= event.phone %></div>
+  <div>email: <%= event.email %></div>
+<% end %>

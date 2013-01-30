@@ -10,6 +10,7 @@ gem 'pry-rails'
 gem 'annotate'
 gem 'activeadmin'
 gem 'twitter-bootstrap-rails'
+gem 'rails3-jquery-autocomplete'
 
 
 # Gems used only for assets and not required

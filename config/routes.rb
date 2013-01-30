@@ -14,7 +14,11 @@ Trashback::Application.routes.draw do
     end
 
   resources :items
+  resources :events
 
+  post '/rewards' => 'events#rewards'
+  post '/recyclables' => 'events#recyclables'
+  post '/events/newuser' => 'events#newuser'
 
 
 
