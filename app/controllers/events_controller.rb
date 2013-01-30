@@ -1,8 +1,7 @@
 class EventsController < ApplicationController
-
   autocomplete :user, :phone, :full => true, :extra_data => [:phone]
+
   def index
-    binding.pry
     @events = Event.all
   end
   def new

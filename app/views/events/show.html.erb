@@ -14,11 +14,20 @@
 input{
   width: 150px;
 }
+#rewards{
+  margin-right: 30px;
+  float: left;
+  display: inline-block;
+}
 .reward{
   float: left;
   padding: 3px 5px;
   margin: 3px;
   border: 1px solid #000;
+}
+#recycles{
+  float: left;
+  display: inline-block;
 }
 .recyclable{
   float: left;
@@ -26,11 +35,31 @@ input{
   margin: 3px;
   border: 1px solid #000;
 }
-#form{
+#add_add{
   float: left;
   width: 300px;
 }
-#register_user{
+#recycle{
+  width: 100%;
+  float: left;
+  display: inline-block;
+  padding: 10px 30px;
+}
+#user_show{
+  float: left;
+  display: inline-block;
+  padding: 10px;
+}
+#redeem_user{
+  float: left;
+  border: 1px solid #000;
+  display: inline-block;
+  padding: 10px;
+}
+#redeem{
+  float: left;
+  display: inline-block;
+  padding: 10px;
 }
 </style>
 <div id='cont'>
@@ -42,10 +71,11 @@ input{
     <div>contact person: <%= @event.contact %></div>
     <div>phone: <%= @event.phone %></div>
     <div>email: <%= @event.email %></div>
+    <button id='add_item'>show hide items</button>
   </div>
 
-  <div id='form'>
-    <h3>Add</h3>
+  <div id='add_add'>
+    <h3>Add Items</h3>
     <%= form_tag do %>
       item name*: <%= text_field_tag 'name' %><br>
       value*: <%= text_field_tag 'value' %><br>
@@ -75,8 +105,8 @@ input{
         Quantity: <%= r.quantity %>
       </div>
     <% end %>
+    <div class='clearfix'></div>
   </div>
-  <div class='clearfix'></div>
   <div id='recycles'>
     <h3>Recyclables</h3>
     <% @event.recyclables.each do |r| %>
@@ -85,48 +115,53 @@ input{
         Value: <%= number_to_currency(r.value, :unit => '') %>
       </div>
     <% end %>
+    <div class='clearfix'></div>
   </div>
   <div class='clearfix'></div>
-  <div>
+  <div id='recycle'>
+    <h3>Recycle!</h3>
     <%= form_tag '/recycle' do %>
       Phone number: <%= autocomplete_field_tag 'user', '', autocomplete_user_phone_events_path, :size => 75 %><br>
-      Item: <%= collection_select(:recyclable, :id, @event.recyclables, :id, :item )%><br>
-      Quantity: <%= select :quantity, :number, (0..10) %><br>
+      Item: <%= collection_select(:recyclable, :id, @event.recyclables, :id, :item )%>
+      Quantity: <%= select :quantity, :number, (0..10) %>
       <%= hidden_field_tag 'event_id', @event.id %>
       <%= submit_tag 'recycle!' %>
     <% end %>
   </div>
-  <div id='user_show'>
+  <div class='clearfix'></div>
+  <div id='redeem_user'>
     <% if params[:u] %>
-      <% @user = User.find(params[:u]) %>
-      Name: <%= @user.name %><br>
-      Email: <%= @user.email %><br>
-      Phone: <%= @user.phone %><br>
-      Balance: <%= number_to_currency( @user.balance, :unit => '' ) %><br>
-      <h3>Redeem</h3>
-      <% @event.rewards.each do |r| %>
-        <% if @user.balance >= r.value && r.quantity > 0 %>
-        <div class='reward'>
-          <%= form_tag '/redeem' do %>
-            Item: <%= r.item %><br>
-            Value: <%= number_to_currency(r.value, :unit => '') %><br>
-            Quantity: <%= r.quantity %>
-            <%= hidden_field_tag 'event_id', @event.id %>
-            <%= hidden_field_tag 'r_id', r.id %>
-            <%= hidden_field_tag 'user_id', @user.id %>
-            <%= submit_tag 'redeem' %>
+      <div id='user_show'>
+        <h3>User</h3>
+        <% @user = User.find(params[:u]) %>
+        Name: <%= @user.name %><br>
+        Email: <%= @user.email %><br>
+        Phone: <%= @user.phone %><br>
+        Balance: <%= number_to_currency( @user.balance, :unit => '' ) %><br>
+      </div>
+      <div id='redeem'>
+        <h3>Redeem</h3>
+        <% @event.rewards.each do |r| %>
+          <% if @user.balance >= r.value && r.quantity > 0 %>
+            <div class='reward'>
+              <%= form_tag '/redeem' do %>
+                Item: <%= r.item %><br>
+                Value: <%= number_to_currency(r.value, :unit => '') %><br>
+                Quantity: <%= r.quantity %>
+                <%= hidden_field_tag 'event_id', @event.id %>
+                <%= hidden_field_tag 'r_id', r.id %>
+                <%= hidden_field_tag 'user_id', @user.id %><br>
+                <%= submit_tag 'redeem' %>
+              <% end %>
+            </div>
           <% end %>
-        </div>
-      <% end -%>
-    <% end %>
-    <% end %>
-  </div>
+        <% end %><!-- each -->
+        <div class='clearfix'></div>
+      </div><!-- redeem -->
+    <% end %><!-- if params u -->
+    <div class='clearfix'></div>
+  </div><!-- redeem user -->
 </div> <!-- container -->
-
-
-
-
-
 
 
 
@@ -135,6 +170,9 @@ input{
   $(function(){
     $('#add_reward').click(add_reward);
     $('#add_recycle').click(add_recycle);
+    $('#add_item').click(function(){
+      $('#add_add').toggle();
+    });
   });
 
   function add_reward(){
@@ -147,7 +185,7 @@ input{
       url: "/rewards",
       data: { item: name, value: value, quantity: qty, event_id: event_id }
     }).done(function( msg ) {
-location.reload();
+      location.reload();
     });
   }
   function add_recycle(){
